@@ -15,4 +15,6 @@ public class Emp { // DTO, VO
 	private int comm;
 	private int deptno;
 
+	// join 용
+	private Dept dept;
 }

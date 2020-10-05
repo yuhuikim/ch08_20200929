@@ -19,8 +19,27 @@ public class EmpServiceImpl implements EmpService {
 		return ed.empSelect(empno);
 	}
 
+	@Override
+	public int empInsert(Emp emp) {
+		return ed.empInsert(emp);
+	}
+
+	@Override
+	public int empUpdate(Emp emp) {
+		return ed.empUpdate(emp);
+	}
+
+	@Override
+	public int empDelete(int empno) {
+		return ed.empDelete(empno);
+	}
+
+	@Override
+	public List<Emp> empJoinList() {
+		return ed.empJoinList();
+	}
+	@Override
 	public List<Emp> empAllList() {
 		return ed.empAllList();
 	}
-
 }

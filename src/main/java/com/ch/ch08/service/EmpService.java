@@ -10,4 +10,12 @@ public interface EmpService {
 
 	List<Emp> empAllList();
 
+	List<Emp> empJoinList();
+
+	int empInsert(Emp emp);
+
+	int empUpdate(Emp emp);
+
+	int empDelete(int empno);
+
 }

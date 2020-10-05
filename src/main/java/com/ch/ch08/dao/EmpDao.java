@@ -8,6 +8,14 @@ public interface EmpDao {
 
 	Emp empSelect(int empno);
 
+	int empInsert(Emp emp);
+
+	int empUpdate(Emp emp);
+
+	int empDelete(int empno);
+	
 	List<Emp> empAllList();
+	
+	List<Emp> empJoinList();
 
 }

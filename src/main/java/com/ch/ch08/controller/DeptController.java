@@ -36,7 +36,7 @@ public class DeptController {
 		if (dept == null)
 			msg = "사용 가능한 코드입니다.";
 		else
-			msg = "사용 중이니 다른번호를 사용하시오.";
+			msg = "사용 중이니 다른 번호를 사용하시오.";
 		return msg;
 	}
 

@@ -12,6 +12,9 @@ import com.ch.ch08.model.Dept;
 import com.ch.ch08.model.Emp;
 import com.ch.ch08.service.DeptService;
 import com.ch.ch08.service.EmpService;
+import com.sun.scenario.effect.Blend.Mode;
+
+import oracle.net.aso.s;
 
 @Controller
 public class EmpController {
@@ -47,7 +50,16 @@ public class EmpController {
 	}
 
 	@RequestMapping("empInsert")
-	public String empInsert() {
+	public String empInsert(Emp emp, Model model) { // emp는 화면에서 넘어온 데이터
+		int result = 0;
+		// 중복 체크 했지만 혹시 같은 사번 데이터를 입력하는 것을 방지하기 위해서
+		Emp emp2 = es.empSelect(emp.getEmpno());
+		if (emp2 == null) {
+			result = es.empInsert(emp); // result는 입력에 성공한 갯수
+		} else
+			result = -1; // 중복된 사번 입력
+		model.addAttribute("result", result);
+		model.addAttribute("emp", emp);
 		return "/emp/empInsert";
 	}
 
@@ -61,5 +73,42 @@ public class EmpController {
 		else
 			msg = "사용 중인 사번이므로 다른 사번을 사용하시오.";
 		return msg;
+	}
+
+	@RequestMapping("empUpdateForm")
+	public String empUpdateForm(int empno, Model model) {
+		Emp emp = es.empSelect(empno);
+		List<Dept> deptList = ds.list(); // 부서코드 선택
+		List<Emp> empList = es.empAllList(); // 관리자 선택
+		model.addAttribute("deptList", deptList);
+		model.addAttribute("empList", empList);
+		model.addAttribute("emp", emp);
+		return "/emp/empUpdateForm";
+	}
+
+	@RequestMapping("empUpdate")
+	public String empUpdate(Emp emp, Model model) {
+		int result = es.empUpdate(emp);
+		model.addAttribute("result", result);
+		model.addAttribute("emp", emp);
+		return "/emp/empUpdate";
+	}
+
+	@RequestMapping("empDelete")
+	public String empDelete(int empno, Model model) {
+		// 삭제된 사번에 속한 부서코드를 알기 위해 남아 있는 직원에 대한 정보를 제공
+		Emp emp = es.empSelect(empno);
+
+		int result = es.empDelete(empno);
+		model.addAttribute("result", result);
+		model.addAttribute("emp", emp);
+		return "/emp/empDelete";
+	}
+
+	@RequestMapping("empAllList")
+	public String empAllList(Model model) {
+		List<Emp> empList = es.empJoinList();
+		model.addAttribute("empList", empList);
+		return "/emp/empAllList";
 	}
 }
